@@ -30,9 +30,32 @@ public class Main extends Application {
 
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
+            primaryStage.setTitle("Address Book");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean newPersonWindow(Person person) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("NewPersonView.fxml"));
+            AnchorPane pane = loader.load();
+            Scene scene = new Scene(pane);
+
+            Stage stage = new Stage();
+
+            NewPersonController controller = loader.getController();
+            controller.setMain(this, stage, person);
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Address Book - Add new Person");
+            stage.showAndWait();
+            return controller.isOkClicked();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
